@@ -1,18 +1,44 @@
+const getCookie = (cookieName) => {
+  let allCookies = document.cookie;
+  console.log('allcookies', allCookies);
+  const cookieList = allCookies.split(';');
+  // console.log('cookie list', cookieList);
+  let foundCookie = cookieList.find(cookie => cookie.includes(cookieName));
+  // console.log('found cookie', foundCookie);
+  if (foundCookie) {
+    let cookieVal = foundCookie.slice(foundCookie.indexOf('=') + 1);
+    // console.log('cookie val is',cookieVal);
+    return cookieVal;
+  }
+}
+
 /* ============================== PHASE 1 + 2 ============================== */
 
 // For storing user's theme selection in cookies
 function storeTheme(themeName) {
     // Your code here
+    // stores for x seconds
+    let themeCookie = `theme=${themeName}; max-age = 10`;
+    // console.log(themeCookie);
+    document.cookie = themeCookie;
 }
 
 // For restoring theme from cookies, if selected by the user in the past
 function restoreTheme() {
     // Your code here
+    let theme = getCookie('theme');
+    // console.log(themeCookie);
+    console.log(theme);
+    if (theme) {
+      // console.log(theme);
+      setTheme(theme);
+    }
 }
 
 // For clearing theme selection from cookies (reset to default)
 function clearTheme() {
     // Your code here
+    document.cookie = "theme=; expires = Thu, 01 Jan 1970 00:00:00 GMT"
 }
 
 /* ================================ PHASE 3 ================================ */
@@ -20,16 +46,22 @@ function clearTheme() {
 // For storing user's display name in cookies
 function storeName(displayName) {
     // Your code here
+    document.cookie = `name=${displayName}`;
 }
 
 // For restoring user's display name from cookies, if set in the past
 function restoreName() {
     // Your code here
+    const displayName = getCookie('name');
+    if (displayName) {
+      setInputValue('display-name', displayName);
+    }
 }
 
 // For clearing user's display name from cookies
 function clearName() {
     // Your code here
+    document.cookie = "name=; expires = Thu, 01 Jan 1970 00:00:00 GMT"
 }
 
 /* ========================================================================= */
